@@ -5,9 +5,13 @@ services:
       context: .
       dockerfile: Dockerfile
     working_dir: /usr/src/app
+    image: wa-api:latest
     ports:
-      - "8081:8080"
+      - "8081:3001"
+    volumes:
+      - ./.wwebjs_auth:/.wwebjs_auth
     environment:
       - NODE_ENV=development
       - WHATSAPP_API_KEY=YOUR_API_KEY
     command: npm start
+
