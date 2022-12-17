@@ -1,9 +1,7 @@
-
 require('dotenv').config()
 
 const express = require('express')
 const qrcode = require('qrcode-terminal');
-
 
 const app = express()
 const port = 3001
