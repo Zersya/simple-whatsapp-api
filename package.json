@@ -1,0 +1,15 @@
+{
+  "name": "whatsapp-bot",
+  "version": "1.0.0",
+  "description": "A simple WhatsApp bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.18.4"
+  }
+}
