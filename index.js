@@ -10,7 +10,7 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const client = new Client({
     authStrategy: new LocalAuth({ clientId: "client-two" }),
     puppeteer: {
-        args: ['--no-sandbox'],
+        args: ['--no-sandbox', '--disable-dev-shm-usage'],
     }
 });
 
