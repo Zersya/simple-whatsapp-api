@@ -1,13 +1,13 @@
 version: '3'
 services:
-  app:
+  app_https:
     build:
       context: .
       dockerfile: Dockerfile
     working_dir: /usr/src/app
     image: wa-api:latest
     ports:
-      - "8081:3001"
+      - "443:3001"
     volumes:
       - ./.wwebjs_auth:/.wwebjs_auth
     environment:
