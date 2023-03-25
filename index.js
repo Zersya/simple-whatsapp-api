@@ -30,7 +30,7 @@ client.on('message', message => {
 
 
 client.initialize().then(() => {
-    app.post('/api/send', (req, res) => {
+    app.post('/api/send', async (req, res) => {
         const { message, number } = req.query;
         const reqWhatsappApiKey = req.headers['x-whatsapp-api-key'];
 
@@ -41,9 +41,12 @@ client.initialize().then(() => {
             return;
         }
 
-        client.sendMessage(`${number}@c.us`, message);
-
-        res.send('Message sent!')
+        try {
+            await client.sendMessage(`${number}@c.us`, message)
+            res.send('Message sent!')
+        } catch (error) {
+            res.status(500).send('Error sending message')
+        }
     })
 
     app.listen(port, () => {
