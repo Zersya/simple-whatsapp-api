@@ -52,15 +52,15 @@ client.initialize().then(() => {
         }
 
         try {
-            await new Promise(resolve => setTimeout(resolve, getRandomInt(1200, 3100)));
-            
+            await new Promise(resolve => setTimeout(resolve, getRandomInt(1800, 5100)));
+
             if (req.files && req.files.file) {
                 const media = new MessageMedia(req.files.file.mimetype, req.files.file.data.toString('base64'), req.files.file.name);
                 await client.sendMessage(`${number}@c.us`, media);
             }
             
             if (message) {
-                await new Promise(resolve => setTimeout(resolve, getRandomInt(1200, 3100)));
+                await new Promise(resolve => setTimeout(resolve, getRandomInt(1800, 5100)));
 
                 await client.sendMessage(`${number}@c.us`, message);
             } else {
