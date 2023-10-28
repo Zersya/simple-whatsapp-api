@@ -12,6 +12,6 @@ services:
       - ./.wwebjs_auth:/.wwebjs_auth
     environment:
       - NODE_ENV=development
-      - WHATSAPP_API_KEY=YOUR_API_KEY
+      - WHATSAPP_API_KEY=${WHATSAPP_API_KEY}
     command: npm start
 
