@@ -7,11 +7,29 @@ services:
     working_dir: /usr/src/app
     image: wa-api:latest
     ports:
-      - "8081:3001"
+      - "3001:3001"
+    networks:
+      - proxy
     volumes:
       - ./.wwebjs_auth:/.wwebjs_auth
     environment:
       - NODE_ENV=development
       - WHATSAPP_API_KEY=${WHATSAPP_API_KEY}
     command: npm start
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.entrypoints=http"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_HOST}`)"
+      - "traefik.http.middlewares.${APP_NAME}-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.${APP_NAME}.middlewares=${APP_NAME}-https-redirect"
+      - "traefik.http.routers.${APP_NAME}-secure.entrypoints=https"
+      - "traefik.http.routers.${APP_NAME}-secure.rule=Host(`${APP_HOST}`)"
+      - "traefik.http.routers.${APP_NAME}-secure.tls=true"
+      - "traefik.http.routers.${APP_NAME}-secure.tls.certresolver=http"
+      - "traefik.http.routers.${APP_NAME}-secure.service=${APP_NAME}"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=3001"
+      - "traefik.docker.network=proxy"
 
+networks:
+  proxy:
+    external: true
