@@ -42,11 +42,19 @@ function getRandomInt(min, max) {
 client.initialize().then(() => {
     app.post('/api/send', async (req, res) => {
         const { message, number } = req.query;
-        const reqWhatsappApiKey = req.headers['x-whatsapp-api-key'];
+
+        if(!req.headers.authorization) {
+            res.status(401).send('Unauthorized');
+            return;
+        }
+
+        const base64Credentials = req.headers.authorization.split(' ')[1];
+        const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
+        const [reqWhatsappApiKey, _] = credentials.split(':');
 
         const envWhatsappApiKey = process.env.WHATSAPP_API_KEY;
 
-        if (reqWhatsappApiKey !== envWhatsappApiKey) {
+        if (!reqWhatsappApiKey || reqWhatsappApiKey !== envWhatsappApiKey) {
             res.status(401).send('Unauthorized');
             return;
         }
